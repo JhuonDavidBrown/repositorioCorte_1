@@ -38,14 +38,13 @@ char modo=MODO1;
 int main(void)
 {
 	//Configuramos el puerto PD como salidas para D1 y D2;
-    DDRD |=  ( (1<<D1)   | (1<<D2)   );
+    DDRD |=  ( (1<<D1)   | (1<<D2) );
 	
 	//Configuramos el puerto PC como entradas para BTNA y BTNB;
 	DDRC &= ~( (1<<PUL1) | (1<<PUL2) );
 	
     while (1) 
     {
-		
 		if(modo==MODO1){
 			if(contadorPul1==40){
 				PORTB ^= (1<<D1);

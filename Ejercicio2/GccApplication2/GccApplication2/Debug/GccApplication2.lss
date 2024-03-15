@@ -23,9 +23,9 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   9 .debug_frame  00000024  00000000  00000000  000013cc  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000003d2  00000000  00000000  000013f0  2**0
+ 10 .debug_str    000003da  00000000  00000000  000013f0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000010  00000000  00000000  000017c2  2**0
+ 11 .debug_ranges 00000010  00000000  00000000  000017ca  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -104,7 +104,7 @@ Disassembly of section .text:
 int main(void)
 {
 	//Configuramos el puerto PD como salidas para D1 y D2;
-    DDRD |=  ( (1<<D1)   | (1<<D2)   );
+    DDRD |=  ( (1<<D1)   | (1<<D2) );
   a6:	8a b1       	in	r24, 0x0a	; 10
   a8:	84 64       	ori	r24, 0x44	; 68
   aa:	8a b9       	out	0x0a, r24	; 10
@@ -117,9 +117,8 @@ int main(void)
 	
     while (1) 
     {
-		
 		if(modo==MODO1){
-  b2:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
+  b2:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
   b6:	81 30       	cpi	r24, 0x01	; 1
   b8:	a1 f4       	brne	.+40     	; 0xe2 <main+0x3c>
 			if(contadorPul1==40){
@@ -148,7 +147,7 @@ int main(void)
 			}
 		}
 		if(modo==MODO2){
-  e2:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
+  e2:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
   e6:	82 30       	cpi	r24, 0x02	; 2
   e8:	a1 f4       	brne	.+40     	; 0x112 <main+0x6c>
 			if(contadorPul1==90){
@@ -189,20 +188,20 @@ int main(void)
  11c:	86 b1       	in	r24, 0x06	; 6
  11e:	fc cf       	rjmp	.-8      	; 0x118 <main+0x72>
 			if(modo==MODO1){
- 120:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
+ 120:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
  124:	81 30       	cpi	r24, 0x01	; 1
  126:	19 f4       	brne	.+6      	; 0x12e <main+0x88>
 				modo=MODO2;
  128:	82 e0       	ldi	r24, 0x02	; 2
- 12a:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
+ 12a:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
 			}
 			if(modo==MODO2){
- 12e:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
+ 12e:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
  132:	82 30       	cpi	r24, 0x02	; 2
  134:	19 f4       	brne	.+6      	; 0x13c <main+0x96>
 				modo=MODO1;
  136:	81 e0       	ldi	r24, 0x01	; 1
- 138:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
+ 138:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
 			}
 		}
 		if( getPUL1() != 0 && getPUL2() == 0){
@@ -216,20 +215,20 @@ int main(void)
  148:	35 9b       	sbis	0x06, 5	; 6
  14a:	fc cf       	rjmp	.-8      	; 0x144 <main+0x9e>
 			if(modo==MODO1){
- 14c:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
+ 14c:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
  150:	81 30       	cpi	r24, 0x01	; 1
  152:	19 f4       	brne	.+6      	; 0x15a <main+0xb4>
 				modo=MODO2;
  154:	82 e0       	ldi	r24, 0x02	; 2
- 156:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
+ 156:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
 			}
 			if(modo==MODO2){
- 15a:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
+ 15a:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
  15e:	82 30       	cpi	r24, 0x02	; 2
  160:	19 f4       	brne	.+6      	; 0x168 <main+0xc2>
 				modo=MODO1;
  162:	81 e0       	ldi	r24, 0x01	; 1
- 164:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
+ 164:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
 			}
 		}
 		
