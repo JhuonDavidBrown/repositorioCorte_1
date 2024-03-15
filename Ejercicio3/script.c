@@ -28,7 +28,7 @@ int main()
 				Contador=0;    // reinicia contador si pasa de 9
 			}
 		}
-		PORTD=Display_7seg[Contador];   //mostrar el valor del elemento del arrglo
+		PORTD = Display_7seg[Contador];   //mostrar el valor del elemento del arrglo
 		_delay_ms(5);    //delay de 20ms
 	}	
 }
