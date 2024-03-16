@@ -5,43 +5,51 @@
  * Author : USUARIO
  */ 
 
+#define F_CPU 8000000UL
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define F_CPU 8000000UL
 
-#define LED1 PD6
-#define LED2 PD2
+
+#define LED1     PD6
+#define LED2     PD2
 #define PULSADOR PC4
 
+
+char contador=0;
+
+
+void logicaLed1(void){
+	// Parpadeo de LED1
+	if(contador==14){ //140 ms
+		PORTD ^= (1 << LED1); // Enciende LED1
+		contador=0;
+	}
+}
+
 int main(void) {
-	// Configura LED1 y LED2 como salidas
+	
 	DDRD |= (1 << LED1) | (1 << LED2);
+	DDRC &= ~(1 << PULSADOR); // Make pin 5 of port C as a input
 	
-	// Apaga LED1 y LED2 inicialmente
+	// Apaga LED1 y LED2 inicialmente;
 	PORTD &= ~(1 << LED1);
-	PORTD &= ~(1 << LED2);
 	
-	// Configura PULSADOR como entrada y habilita la resistencia de pull-up interna
-	DDRC &= ~(1 << PULSADOR);
-	PORTC |= (1 << PULSADOR);
-
 	while (1) {
-		// Parpadeo de LED1
-		PORTD |= (1 << LED1); // Enciende LED1
-		_delay_ms(140);
-		PORTD &= ~(1 << LED1); // Apaga LED1
-		_delay_ms(140);
-
-		// Verifica el estado del botón
-		if (PINC & (1 << PULSADOR)) { // Si el botón no está presionado
-			PORTD &= ~(1 << LED2); // Apaga LED2
-			} else { // Si el botón está presionado
-			PORTD ^= (1 << LED2); // Conmuta el estado de LED2
-			_delay_ms(200); // Retardo para debounce
+		if ( (PINC & (1 << PULSADOR)) == 0){
+			while( (PINC & (1 << PULSADOR)) == 0  ){
+				logicaLed1();
+				_delay_ms(10);
+				contador++;
+			}
+			PORTD ^= (1 << LED2); //PIN4 of port D is high
 		}
+		
+		logicaLed1();
+		_delay_ms(10);
+		contador++;
+		
 	}
 
 	return 0;
 }
-
