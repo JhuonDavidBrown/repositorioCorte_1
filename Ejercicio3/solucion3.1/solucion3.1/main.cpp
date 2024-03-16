@@ -2,7 +2,7 @@
  * Solution coding ejercicio 3
  * Author : Juan David, Juan Manuel, Andres Gomez */ 
 #include <avr/io.h>
-#define F_CPU 8000000UL //Frecuencia 8mhz
+#define F_CPU 16000000 //Frecuencia 8mhz
 #include <util/delay.h> //libreria pa usar delays
 #include <stdint.h>  //Libreria pa variables enteras
 #define BUTTON_STATE() (PINC&(1<<PINC4)) //asignar el nombre button al estado del pin P0
@@ -28,13 +28,15 @@ int main()
 				Contador=0;    // reinicia contador si pasa de 9
 			}
 		}
-		PORTB=Display_7seg[Contador];   //mostrar el valor del elemento del arrglo
-		_delay_ms(5);    //delay de 20ms
+		PORTD=Display_7seg[Contador];   //mostrar el valor del elemento del arrglo
+		_delay_ms(1000);    //delay de 20ms
 	}	
 }
 void Register_setting(void) // funcion de registros
 {
-	DDRD=0xFF;  //configurar puerto D como salida
-	DDRC&=~(1<<PIND4); //Configurar pin B0 como entrada
+	DDRD=0b11111110;  //configurar puerto D como salida
+	PORTD =0b11111110;
+	DDRC&=~(1<<PINC4); //Configurar pin B0 como entrada
+	PORTC = (1<<PORTC4);
 }
 

@@ -35,5 +35,6 @@ int main()
 void Register_setting(void) // funcion de registros
 {
 	DDRD=0xFF;  //configurar puerto D como salida
+	PORTD= 0XFF;
 	DDRC&=~(1<<PINC4); //Configurar pin B0 como entrada
 }

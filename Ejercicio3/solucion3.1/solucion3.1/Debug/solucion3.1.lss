@@ -3,29 +3,27 @@ solucion3.1.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000010  00800100  000000f0  00000184  2**0
+  0 .data         00000000  00800100  00800100  0000011a  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000000f0  00000000  00000000  00000094  2**1
+  1 .text         000000c6  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000001  00800110  00800110  00000194  2**0
-                  ALLOC
-  3 .comment      00000030  00000000  00000000  00000194  2**0
+  2 .comment      00000030  00000000  00000000  0000011a  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000001c4  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000014c  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000028  00000000  00000000  00000204  2**0
+  4 .debug_aranges 00000028  00000000  00000000  0000018c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000775  00000000  00000000  0000022c  2**0
+  5 .debug_info   0000072c  00000000  00000000  000001b4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000006be  00000000  00000000  000009a1  2**0
+  6 .debug_abbrev 0000067e  00000000  00000000  000008e0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000286  00000000  00000000  0000105f  2**0
+  7 .debug_line   00000271  00000000  00000000  00000f5e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000034  00000000  00000000  000012e8  2**2
+  8 .debug_frame  00000034  00000000  00000000  000011d0  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000415  00000000  00000000  0000131c  2**0
+  9 .debug_str    00000420  00000000  00000000  00001204  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000018  00000000  00000000  00001731  2**0
+ 10 .debug_ranges 00000018  00000000  00000000  00001624  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -70,18 +68,18 @@ Disassembly of section .text:
   74:	11 e0       	ldi	r17, 0x01	; 1
   76:	a0 e0       	ldi	r26, 0x00	; 0
   78:	b1 e0       	ldi	r27, 0x01	; 1
-  7a:	e0 ef       	ldi	r30, 0xF0	; 240
+  7a:	e6 ec       	ldi	r30, 0xC6	; 198
   7c:	f0 e0       	ldi	r31, 0x00	; 0
   7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
   80:	05 90       	lpm	r0, Z+
   82:	0d 92       	st	X+, r0
-  84:	a0 31       	cpi	r26, 0x10	; 16
+  84:	a0 30       	cpi	r26, 0x00	; 0
   86:	b1 07       	cpc	r27, r17
   88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
 
 0000008a <__do_clear_bss>:
   8a:	21 e0       	ldi	r18, 0x01	; 1
-  8c:	a0 e1       	ldi	r26, 0x10	; 16
+  8c:	a0 e0       	ldi	r26, 0x00	; 0
   8e:	b1 e0       	ldi	r27, 0x01	; 1
   90:	01 c0       	rjmp	.+2      	; 0x94 <.do_clear_bss_start>
 
@@ -89,83 +87,55 @@ Disassembly of section .text:
   92:	1d 92       	st	X+, r1
 
 00000094 <.do_clear_bss_start>:
-  94:	a1 31       	cpi	r26, 0x11	; 17
+  94:	a0 30       	cpi	r26, 0x00	; 0
   96:	b2 07       	cpc	r27, r18
   98:	e1 f7       	brne	.-8      	; 0x92 <.do_clear_bss_loop>
-  9a:	0e 94 59 00 	call	0xb2	; 0xb2 <main>
-  9e:	0c 94 76 00 	jmp	0xec	; 0xec <_exit>
+  9a:	0e 94 5c 00 	call	0xb8	; 0xb8 <main>
+  9e:	0c 94 61 00 	jmp	0xc2	; 0xc2 <_exit>
 
 000000a2 <__bad_interrupt>:
   a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 000000a6 <_Z16Register_settingv>:
-		_delay_ms(5);    //delay de 20ms
+		_delay_ms(1000);    //delay de 20ms
 	}	
 }
 void Register_setting(void) // funcion de registros
 {
-	DDRB=0xFF;  //configurar puerto D como salida
-  a6:	8f ef       	ldi	r24, 0xFF	; 255
-  a8:	84 b9       	out	0x04, r24	; 4
-	DDRD&=~(1<<PIND0); //Configurar pin B0 como entrada
-  aa:	8a b1       	in	r24, 0x0a	; 10
-  ac:	8e 7f       	andi	r24, 0xFE	; 254
-  ae:	8a b9       	out	0x0a, r24	; 10
-  b0:	08 95       	ret
+	DDRD=0b11111110;  //configurar puerto D como salida
+  a6:	8e ef       	ldi	r24, 0xFE	; 254
+  a8:	8a b9       	out	0x0a, r24	; 10
+	PORTD =0b11111110;
+  aa:	8b b9       	out	0x0b, r24	; 11
+	DDRC&=~(1<<PINC4); //Configurar pin B0 como entrada
+  ac:	87 b1       	in	r24, 0x07	; 7
+  ae:	8f 7e       	andi	r24, 0xEF	; 239
+  b0:	87 b9       	out	0x07, r24	; 7
+	PORTC = (1<<PORTC4);
+  b2:	80 e1       	ldi	r24, 0x10	; 16
+  b4:	88 b9       	out	0x08, r24	; 8
+  b6:	08 95       	ret
 
-000000b2 <main>:
+000000b8 <main>:
 
-void Register_setting(void);  //funcion configurar registro
+void Register_setting(void);  //definir funcion
 
 int main()
 {
 	Register_setting();              //llamdo a la funcion de registros para configurar puertos
-  b2:	0e 94 53 00 	call	0xa6	; 0xa6 <_Z16Register_settingv>
+  b8:	0e 94 53 00 	call	0xa6	; 0xa6 <_Z16Register_settingv>
 	
 	while(1)						//bucle main infinito
 	{
 		if(BUTTON_STATE()!=1)          //condicion de pulsador fue presionado
-  b6:	48 99       	sbic	0x09, 0	; 9
-  b8:	0b c0       	rjmp	.+22     	; 0xd0 <main+0x1e>
+  bc:	86 b1       	in	r24, 0x06	; 6
 		{
 			while(BUTTON_STATE()!=1);  //esperar mientras el pulsador este presionado
-  ba:	48 9b       	sbis	0x09, 0	; 9
-  bc:	fe cf       	rjmp	.-4      	; 0xba <main+0x8>
-			Contador++;          //incrementar valor
-  be:	80 91 10 01 	lds	r24, 0x0110	; 0x800110 <__data_end>
-  c2:	8f 5f       	subi	r24, 0xFF	; 255
-  c4:	80 93 10 01 	sts	0x0110, r24	; 0x800110 <__data_end>
-			if (Contador>16)    // condicion
-  c8:	81 31       	cpi	r24, 0x11	; 17
-  ca:	10 f0       	brcs	.+4      	; 0xd0 <main+0x1e>
-			{
-				Contador=0;    // reinicia contador si pasa de 9
-  cc:	10 92 10 01 	sts	0x0110, r1	; 0x800110 <__data_end>
-			}
-		}
-		PORTB=Display_7seg[Contador];   //mostrar el valor del elemento del arrglo
-  d0:	e0 91 10 01 	lds	r30, 0x0110	; 0x800110 <__data_end>
-  d4:	f0 e0       	ldi	r31, 0x00	; 0
-  d6:	e0 50       	subi	r30, 0x00	; 0
-  d8:	ff 4f       	sbci	r31, 0xFF	; 255
-  da:	80 81       	ld	r24, Z
-  dc:	85 b9       	out	0x05, r24	; 5
-	#else
-		//round up by default
-		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
-	#endif
+  be:	86 b1       	in	r24, 0x06	; 6
+  c0:	fe cf       	rjmp	.-4      	; 0xbe <main+0x6>
 
-	__builtin_avr_delay_cycles(__ticks_dc);
-  de:	8f e0       	ldi	r24, 0x0F	; 15
-  e0:	97 e2       	ldi	r25, 0x27	; 39
-  e2:	01 97       	sbiw	r24, 0x01	; 1
-  e4:	f1 f7       	brne	.-4      	; 0xe2 <main+0x30>
-  e6:	00 c0       	rjmp	.+0      	; 0xe8 <main+0x36>
-  e8:	00 00       	nop
-  ea:	e5 cf       	rjmp	.-54     	; 0xb6 <main+0x4>
+000000c2 <_exit>:
+  c2:	f8 94       	cli
 
-000000ec <_exit>:
-  ec:	f8 94       	cli
-
-000000ee <__stop_program>:
-  ee:	ff cf       	rjmp	.-2      	; 0xee <__stop_program>
+000000c4 <__stop_program>:
+  c4:	ff cf       	rjmp	.-2      	; 0xc4 <__stop_program>
