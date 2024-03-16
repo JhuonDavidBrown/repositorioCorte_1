@@ -23,9 +23,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   9 .debug_frame  00000024  00000000  00000000  000013c8  2**2
                   CONTENTS, READONLY, DEBUGGING
+<<<<<<< HEAD
+ 10 .debug_str    000003da  00000000  00000000  000013f0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000010  00000000  00000000  000017ca  2**0
+=======
  10 .debug_str    000003cc  00000000  00000000  000013ec  2**0
                   CONTENTS, READONLY, DEBUGGING
  11 .debug_ranges 00000010  00000000  00000000  000017b8  2**0
+>>>>>>> 1ed35b0125f0820bdf5292ace1936b3d3e255b41
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -103,8 +109,13 @@ char modo=MODO1;
 
 int main(void)
 {
+<<<<<<< HEAD
+	//Configuramos el puerto PD como salidas para D1 y D2;
+    DDRD |=  ( (1<<D1)   | (1<<D2) );
+=======
 	// Configuramos el puerto PD como salidas para D1 y D2;
 	DDRD |= (1<<D1) | (1<<D2);
+>>>>>>> 1ed35b0125f0820bdf5292ace1936b3d3e255b41
   a6:	8a b1       	in	r24, 0x0a	; 10
   a8:	84 64       	ori	r24, 0x44	; 68
   aa:	8a b9       	out	0x0a, r24	; 10
@@ -115,9 +126,14 @@ int main(void)
   ae:	8f 7c       	andi	r24, 0xCF	; 207
   b0:	87 b9       	out	0x07, r24	; 7
 	
+<<<<<<< HEAD
+    while (1) 
+    {
+=======
 	while (1)
 	{
 		
+>>>>>>> 1ed35b0125f0820bdf5292ace1936b3d3e255b41
 		if(modo==MODO1){
   b2:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
   b6:	81 30       	cpi	r24, 0x01	; 1
@@ -195,6 +211,16 @@ int main(void)
 				modo=MODO2;
  128:	82 e0       	ldi	r24, 0x02	; 2
  12a:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
+<<<<<<< HEAD
+			}
+			if(modo==MODO2){
+ 12e:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
+ 132:	82 30       	cpi	r24, 0x02	; 2
+ 134:	19 f4       	brne	.+6      	; 0x13c <main+0x96>
+				modo=MODO1;
+ 136:	81 e0       	ldi	r24, 0x01	; 1
+ 138:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
+=======
  12e:	05 c0       	rjmp	.+10     	; 0x13a <main+0x94>
 			}
 			else if(modo==MODO2){
@@ -203,6 +229,7 @@ int main(void)
 				modo=MODO1;
  134:	81 e0       	ldi	r24, 0x01	; 1
  136:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
+>>>>>>> 1ed35b0125f0820bdf5292ace1936b3d3e255b41
 			}
 		}
 		if(getBTNA() != 0 && getBTNB() == 0){
@@ -216,6 +243,22 @@ int main(void)
  146:	34 9b       	sbis	0x06, 4	; 6
  148:	fc cf       	rjmp	.-8      	; 0x142 <main+0x9c>
 			if(modo==MODO1){
+<<<<<<< HEAD
+ 14c:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
+ 150:	81 30       	cpi	r24, 0x01	; 1
+ 152:	19 f4       	brne	.+6      	; 0x15a <main+0xb4>
+				modo=MODO2;
+ 154:	82 e0       	ldi	r24, 0x02	; 2
+ 156:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
+			}
+			if(modo==MODO2){
+ 15a:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
+ 15e:	82 30       	cpi	r24, 0x02	; 2
+ 160:	19 f4       	brne	.+6      	; 0x168 <main+0xc2>
+				modo=MODO1;
+ 162:	81 e0       	ldi	r24, 0x01	; 1
+ 164:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
+=======
  14a:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
  14e:	81 30       	cpi	r24, 0x01	; 1
  150:	21 f4       	brne	.+8      	; 0x15a <main+0xb4>
@@ -230,6 +273,7 @@ int main(void)
 				modo=MODO1;
  15e:	81 e0       	ldi	r24, 0x01	; 1
  160:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
+>>>>>>> 1ed35b0125f0820bdf5292ace1936b3d3e255b41
 			}
 		}
 		

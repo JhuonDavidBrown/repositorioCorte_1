@@ -430,11 +430,19 @@ END GROUP
  *(.debug_frame)
  .debug_frame   0x00000000       0x24 main.o
 
+<<<<<<< HEAD
+.debug_str      0x00000000      0x3da
+ *(.debug_str)
+ .debug_str     0x00000000      0x208 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .debug_str     0x00000208      0x1d2 main.o
+                                0x20b (size before relaxing)
+=======
 .debug_str      0x00000000      0x3cc
  *(.debug_str)
  .debug_str     0x00000000      0x208 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_str     0x00000208      0x1c4 main.o
                                 0x1fd (size before relaxing)
+>>>>>>> 1ed35b0125f0820bdf5292ace1936b3d3e255b41
 
 .debug_loc
  *(.debug_loc)

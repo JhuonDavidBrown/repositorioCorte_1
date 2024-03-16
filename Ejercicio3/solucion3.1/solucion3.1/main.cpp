@@ -5,13 +5,13 @@
 #define F_CPU 8000000UL //Frecuencia 8mhz
 #include <util/delay.h> //libreria pa usar delays
 #include <stdint.h>  //Libreria pa variables enteras
-#define BUTTON_STATE() (PIND&(1<<PIND0)) //asignar el nombre button al estado del pin PB0
+#define BUTTON_STATE() (PINC&(1<<PINC4)) //asignar el nombre button al estado del pin P0
 
 // uint8_t Display_7seg[10]= {191,134,219,207,230,237,253,135,255,231}; //Arreglo de numeros del 0 a 9
 uint8_t Display_7seg[16]= {0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x67,0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71}; // hexadecimal
 uint8_t Contador=0; //variable que contara el numero y mostrara en el e display
 
-void Register_setting(void);  //funcion configurar registro
+void Register_setting(void);  //definir funcion
 
 int main()
 {
@@ -34,7 +34,7 @@ int main()
 }
 void Register_setting(void) // funcion de registros
 {
-	DDRB=0xFF;  //configurar puerto D como salida
-	DDRD&=~(1<<PIND0); //Configurar pin B0 como entrada
+	DDRD=0xFF;  //configurar puerto D como salida
+	DDRC&=~(1<<PIND4); //Configurar pin B0 como entrada
 }
 
