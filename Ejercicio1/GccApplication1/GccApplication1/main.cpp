@@ -2,7 +2,7 @@
  * GccApplication1.cpp
  *
  * Created: 3/13/2024 7:59:04 PM
- * Author : USUARIO
+ * Author : Andres gomez
  */ 
 
 #define F_CPU 8000000UL
@@ -20,9 +20,9 @@ char contador=0;
 
 
 void logicaLed1(void){
-	// Parpadeo de LED1
-	if(contador==14){ //140 ms
-		PORTD ^= (1 << LED1); // Enciende LED1
+	
+	if(contador==14){ 
+		PORTD ^= (1 << LED1); 
 		contador=0;
 	}
 }
@@ -30,9 +30,9 @@ void logicaLed1(void){
 int main(void) {
 	
 	DDRD |= (1 << LED1) | (1 << LED2);
-	DDRC &= ~(1 << PULSADOR); // Make pin 5 of port C as a input
+	DDRC &= ~(1 << PULSADOR); 
 	
-	// Apaga LED1 y LED2 inicialmente;
+	
 	PORTD &= ~(1 << LED1);
 	
 	while (1) {
@@ -42,7 +42,7 @@ int main(void) {
 				_delay_ms(10);
 				contador++;
 			}
-			PORTD ^= (1 << LED2); //PIN4 of port D is high
+			PORTD ^= (1 << LED2); 
 		}
 		
 		logicaLed1();
