@@ -124,8 +124,8 @@ int main(void)
   b8:	80 91 20 01 	lds	r24, 0x0120	; 0x800120 <__data_end>
   bc:	8f 5f       	subi	r24, 0xFF	; 255
   be:	80 93 20 01 	sts	0x0120, r24	; 0x800120 <__data_end>
-			if(contador>9)contador=0;
-  c2:	8a 30       	cpi	r24, 0x0A	; 10
+			if(contador>16)contador=0;
+  c2:	81 31       	cpi	r24, 0x11	; 17
   c4:	10 f0       	brcs	.+4      	; 0xca <main+0x24>
   c6:	10 92 20 01 	sts	0x0120, r1	; 0x800120 <__data_end>
 		}

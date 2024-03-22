@@ -1,67 +1,68 @@
-/*
- * solucion3.5
- *
- * Created: 17/03/2024 12:10:45p. m.
- * Author : juan
- */ 
-#define  F_CPU 8000000UL
+#define F_CPU 8000000UL
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define BUTTON_STATE() (PIND&(1<<PIND0))
+#define op 0
+#define led1 PD6
+#define led2 PD2
+#define pul1 PC4
+#define pul2 PC5
 
+uint8_t contadorD1 = 0;
+uint8_t contadorD2 = 0;
+uint8_t modo = 0; // 0 = modo1, 1 = modo2
 
-unsigned char numero_anodo [10] = {
-	0xC0,
-	0xF9,
-	0xA4,
-	0xB0,
-	0x99,
-	0x92,
-	0x83,
-	0xF8,
-	0x80,
-	0x98,
-};
+void modo1(void);
+void modo2(void);
 
-unsigned char numero_catodo [10] ={
-		0x3F,
-		0x06,
-		0x5B,
-		0x4F,
-		0x66,
-		0x6D,
-		0x7C,
-		0x07,
-		0x7F,
-		0x67,	
-	
-};
+int main(void) {
+	DDRD |= (1<<led1)|(1<<led2); // Definiendo puertos de los leds como salida
+	PORTD &= ~((1<<led1)|(1<<led2)); // Apagar los LEDs inicialmente
+	DDRC = 0b11001111;
 
-uint8_t contador = 0;
+	while (1) {
+		if ((PINC & (1<<pul1)) == op && (PINC & (1<<pul2)) != op) {
+			modo = 0; // Cambiar al modo1
+		}
+		else if ((PINC & (1<<pul1)) != op && (PINC & (1<<pul2)) == op) {
+			modo = 1; // Cambiar al modo2
+		}
 
-int main(void)
-{
-	DDRD = 0xFF;
-	PORTB = 0xFF;
-
-	DDRD = 0xFF;
-	PORTB = 0x00;
-	
-	
-    while (1) 
-    {
-
-contador++;
-if(contador > 9) contador = 0;
-
-
-PORTB = numero_anodo [contador];
-PORTD = numero_catodo [contador];
-
-
-
-_delay_ms(500);
+		if (modo == 0) {
+			modo1();
+			} else {
+			modo2();
+		}
+		_delay_ms(5);
+	}
 }
 
+void modo1(void) {
+	contadorD1++;
+	contadorD2++;
+
+	if (contadorD1 == 80) { // 0.4s
+		PORTD ^= (1<<led1); // Invertir el estado del LED1
+		contadorD1 = 0;
+	}
+
+	if (contadorD2 == 140) { // 0.7s
+		PORTD ^= (1<<led2); // Invertir el estado del LED2
+		contadorD2 = 0;
+	}
+}
+
+void modo2(void) {
+	contadorD1++;
+	contadorD2++;
+
+	if (contadorD1 == 180) { // 0.9s
+		PORTD ^= (1<<led1); // Invertir el estado del LED1
+		contadorD1 = 0;
+	}
+
+	if (contadorD2 == 40) { // 0.2s
+		PORTD ^= (1<<led2); // Invertir el estado del LED2
+		contadorD2 = 0;
+	}
 }

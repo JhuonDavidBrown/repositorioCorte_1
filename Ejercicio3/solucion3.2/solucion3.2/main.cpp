@@ -21,7 +21,7 @@ int main(void)
 		{
 			while(getStatusC4()!=0);//esperar hasta que no este op
 			contador ++;
-			if(contador>9)contador=0;
+			if(contador>16)contador=0;
 		}
 		PORTD = Display_7seg[contador];
 		_delay_ms(200); //
