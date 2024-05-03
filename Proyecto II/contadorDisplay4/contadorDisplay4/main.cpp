@@ -12,8 +12,6 @@
 #define F_CPU 16E6UL // Fclk = 16 MHz.
 #define  Op 0
 
-uint8_t flag = 0;
-
 uint8_t unidades = 1;
 uint8_t decenas = 2;
 uint8_t centenas = 3;
@@ -32,7 +30,6 @@ uint8_t togg = 0;
 
 int main(void)
 {
-	
 	DDRB |= 0b00001111; //bit pb0-pb3 como salida
 	
 	DDRC |= 0b00000111; //bit pc0-pc2 como salida (3leds)
@@ -46,7 +43,6 @@ int main(void)
 	
 	DDRC |= 0b00000111;		//Configura: PC2-PC0 = Out
 	PORTC |= 0b00000111;	//LED3-LED1 (PC2-PC0) = 1 (encendidos)
-	
 	ConfigINT1();
 	ConfigINT0();
 	ConfigTMR0();
@@ -59,7 +55,6 @@ int main(void)
 			ContD1 = 0;
 		}
 		ContD2D3++;
-
 		if (Modo == 1 && ContD2D3 == 300)  //1.5s/5ms = 300
 		{
 			PORTC ^= 0b00000010;  //Conmutar LED2
@@ -72,9 +67,8 @@ int main(void)
 		}
 		Display();
 		_delay_ms(5);
+		
 		//asm("NOP");
-		
-		
     }
 }
 void Display(void){
@@ -127,10 +121,9 @@ void Reloj(void){
 		}	
 	}	
 }
-
 ISR(TIMER0_OVF_vect){
 	static uint8_t Cont = 0;
-	TCNT0 = 131; //valor inicial TMR0
+	TCNT0 =131; //valor inicial TMR0
 	if(++Cont == 250) // 1/4ms =250
 	{
 		Reloj();
@@ -147,24 +140,6 @@ ISR(INT0_vect){
 			stop = 0; // Reanudar el contador del display
 		}
 	}
-	
-	/*
-	if(flag == 0)
-	{
-		if ((PIND & 0b00000100) == Op)
-		{
-			++flag;
-			Display();
-			
-		}
-	}
-	if(flag==1 && (PIND & 0b00000100) == Op)
-	{
-		
-		
-		
-	}
-	*/
 }
 ISR(INT1_vect){
 	if ((PIND & 0b00001000) == Op)

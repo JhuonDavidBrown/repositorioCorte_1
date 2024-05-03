@@ -15,19 +15,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 00000060  00000000  00000000  0000048c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000008ec  00000000  00000000  000004ec  2**0
+  6 .debug_info   000008da  00000000  00000000  000004ec  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000704  00000000  00000000  00000dd8  2**0
+  7 .debug_abbrev 00000704  00000000  00000000  00000dc6  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000004ba  00000000  00000000  000014dc  2**0
+  8 .debug_line   000004ba  00000000  00000000  000014ca  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000110  00000000  00000000  00001998  2**2
+  9 .debug_frame  00000110  00000000  00000000  00001984  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000004ce  00000000  00000000  00001aa8  2**0
+ 10 .debug_str    000004c9  00000000  00000000  00001a94  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000150  00000000  00000000  00001f76  2**0
+ 11 .debug_loc    00000150  00000000  00000000  00001f5d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000050  00000000  00000000  000020c6  2**0
+ 12 .debug_ranges 00000050  00000000  00000000  000020ad  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -101,7 +101,7 @@ Disassembly of section .text:
   a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 000000a6 <_Z7Displayv>:
-		
+		//asm("NOP");
     }
 }
 void Display(void){
@@ -241,11 +241,11 @@ void Reloj(void){
  182:	08 95       	ret
 
 00000184 <__vector_16>:
+				}
 			}	
 		}	
 	}	
 }
-
 ISR(TIMER0_OVF_vect){
  184:	1f 92       	push	r1
  186:	0f 92       	push	r0
@@ -265,7 +265,7 @@ ISR(TIMER0_OVF_vect){
  1a2:	ef 93       	push	r30
  1a4:	ff 93       	push	r31
 	static uint8_t Cont = 0;
-	TCNT0 = 131; //valor inicial TMR0
+	TCNT0 =131; //valor inicial TMR0
  1a6:	83 e8       	ldi	r24, 0x83	; 131
  1a8:	86 bd       	out	0x26, r24	; 38
 	if(++Cont == 250) // 1/4ms =250
@@ -331,11 +331,8 @@ ISR(INT0_vect){
 			} else {
 			stop = 0; // Reanudar el contador del display
  212:	10 92 07 01 	sts	0x0107, r1	; 0x800107 <stop>
-		
-		
-		
+		}
 	}
-	*/
 }
  216:	9f 91       	pop	r25
  218:	8f 91       	pop	r24
@@ -454,11 +451,11 @@ void ConfigINT1(void){
  2aa:	08 95       	ret
 
 000002ac <main>:
+uint8_t stop = 0;
 uint8_t togg = 0;
 
 int main(void)
 {
-	
 	DDRB |= 0b00001111; //bit pb0-pb3 como salida
  2ac:	84 b1       	in	r24, 0x04	; 4
  2ae:	8f 60       	ori	r24, 0x0F	; 15
@@ -499,7 +496,6 @@ int main(void)
  2dc:	88 b1       	in	r24, 0x08	; 8
  2de:	87 60       	ori	r24, 0x07	; 7
  2e0:	88 b9       	out	0x08, r24	; 8
-	
 	ConfigINT1();
  2e2:	0e 94 3d 01 	call	0x27a	; 0x27a <_Z10ConfigINT1v>
 	ConfigINT0();
@@ -534,7 +530,6 @@ int main(void)
  31e:	01 96       	adiw	r24, 0x01	; 1
  320:	90 93 09 01 	sts	0x0109, r25	; 0x800109 <ContD2D3+0x1>
  324:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <ContD2D3>
-
 		if (Modo == 1 && ContD2D3 == 300)  //1.5s/5ms = 300
  328:	20 91 0c 01 	lds	r18, 0x010C	; 0x80010c <Modo>
  32c:	21 30       	cpi	r18, 0x01	; 1
